@@ -6,8 +6,8 @@ import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { TiTick } from "react-icons/ti";
 const Banner = () => {
     return (
-        <section className="max-w-7xl mx-auto min-h-screen mt-20 flex justify-between text-secondary  gap-10">
-            <div className="w-1/2">
+        <section className="max-w-7xl mx-auto min-h-screen mt-20 md:flex md:justify-between text-secondary px-3 md:px-0 gap-10">
+            <div className="w-full md:w-1/2">
                 <h2 className="font-bold flex items-center gap-2">
                     <FaCompass className="text-accent " />
                     Sewa Gedung Serbaguna Pontianak
@@ -28,15 +28,16 @@ const Banner = () => {
                         Pesan Sekarang
                         <IoIosArrowDroprightCircle />
                     </Link>
-                    <Link 
-                    href="#price" 
-                    className="py-2 px-4 bg-customMint text-accent  rounded-md flex gap-2 font-bold items-center hover:scale-105">
+                    <Link
+                        href="#price"
+                        className="py-2 px-4 bg-customMint text-accent  rounded-md flex gap-2 font-bold items-center hover:scale-105"
+                    >
                         Paket Gedung
                         <IoIosArrowDroprightCircle />
                     </Link>
                 </div>
             </div>
-            <div className="w-1/2 h-[500px] relative ">
+            <div className="w-full md:w-1/2 h-[500px] relative ">
                 <img
                     src="/images/hero.jpeg"
                     alt="Gedung Aula Serbaguna BPSDM Pontianak"

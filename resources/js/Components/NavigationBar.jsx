@@ -49,7 +49,17 @@ const NavigationBar = () => {
                             : "hover:text-accent"
                     }
                 >
-                    Pesan
+                    Pemesanan
+                </Link>
+                <Link
+                    href="/schedule"
+                    className={
+                        path === "/schedule"
+                            ? "text-accent font-bold"
+                            : "hover:text-accent"
+                    }
+                >
+                    Jadwal
                 </Link>
             </ul>
 
