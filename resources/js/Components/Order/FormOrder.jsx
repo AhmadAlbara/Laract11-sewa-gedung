@@ -12,6 +12,7 @@ const FormOrder = () => {
         noTelpPemakai: "",
         alamat: "",
         keperluan: "",
+        waktuPemakaian: "", // New field for session (Pagi, Siang, Full 1 Hari)
     });
 
     const handleChange = (e) => {
@@ -25,7 +26,7 @@ const FormOrder = () => {
     };
 
     return (
-        <div className="w-full mx-auto p-8   rounded-md">
+        <div className="w-full mx-auto p-8 rounded-md">
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="lg:flex lg:space-x-6 space-y-6 lg:space-y-0">
                     <div className="lg:w-1/2 space-y-4">
@@ -84,6 +85,26 @@ const FormOrder = () => {
                             value={formData.alamat}
                             onChange={handleChange}
                         />
+
+                        {/* New select dropdown for choosing time of use */}
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium text-secondary">
+                                Waktu Pemakaian
+                            </label>
+                            <select
+                                name="waktuPemakaian"
+                                value={formData.waktuPemakaian}
+                                onChange={handleChange}
+                                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-accent focus:border-accent"
+                                required
+                            >
+                                <option value="">Pilih Waktu Pemakaian</option>
+                                <option value="Pagi">Pagi</option>
+                                <option value="Siang">Siang</option>
+                                <option value="Full 1 Hari">Full 1 Hari</option>
+                            </select>
+                        </div>
+
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-secondary">
                                 Keperluan

@@ -1,10 +1,6 @@
 import LandingLayout from "@/Layouts/LandingLayout";
 import { Head } from "@inertiajs/react";
-import { Marker, Popup, MapContainer } from "react-leaflet";
-import { TileLayer } from "react-leaflet/TileLayer";
-import "leaflet/dist/leaflet.css";
 const About = () => {
-    const position = [-0.04294414445834823, 109.33033565071044];
     return (
         <LandingLayout>
             <Head title="Tentang Kami" />

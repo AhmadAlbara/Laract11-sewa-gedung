@@ -6,22 +6,17 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Home');
 });
 
 Route::get('/about', function () {
-return Inertia::render('About');
+    return Inertia::render('About');
 });
 Route::get('/order', function () {
-return Inertia::render('Order');
+    return Inertia::render('Order');
 });
 Route::get('/schedule', function () {
-return Inertia::render('Schedule');
+    return Inertia::render('Schedule');
 });
 
 Route::get('/dashboard', function () {
@@ -34,4 +29,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
