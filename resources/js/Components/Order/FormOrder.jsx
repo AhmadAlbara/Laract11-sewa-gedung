@@ -8,16 +8,22 @@ const FormOrder = () => {
         email: "",
         tanggalPemakaian: "",
         gedung: "",
-        namaPemakai: "",
-        noTelpPemakai: "",
-        alamat: "",
         keperluan: "",
-        waktuPemakaian: "", // New field for session (Pagi, Siang, Full 1 Hari)
     });
-
+    const [errorMessage, setErrorMessage] = useState("");
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+        if (name === "tanggalPemakaian") {
+            const today = new Date();
+            const selectedDate = new Date(value);
+
+            if (selectedDate < today) {
+                setErrorMessage("Tanggal Pemakaian Tidak Valid");
+            } else {
+                setErrorMessage(""); 
+            }
+        }
     };
 
     const handleSubmit = (e) => {
@@ -57,54 +63,32 @@ const FormOrder = () => {
                             value={formData.tanggalPemakaian}
                             onChange={handleChange}
                         />
-                        <InputField
-                            label="Gedung yang Dipesan"
-                            name="gedung"
-                            value={formData.gedung}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className="lg:w-1/2 space-y-4">
-                        <InputField
-                            label="Nama Pemakai"
-                            name="namaPemakai"
-                            value={formData.namaPemakai}
-                            onChange={handleChange}
-                        />
-                        <InputField
-                            label="No. Telepon Pemakai"
-                            name="noTelpPemakai"
-                            type="number"
-                            value={formData.noTelpPemakai}
-                            onChange={handleChange}
-                        />
-                        <InputField
-                            label="Alamat Pemakai"
-                            name="alamat"
-                            value={formData.alamat}
-                            onChange={handleChange}
-                        />
-
-                        {/* New select dropdown for choosing time of use */}
+                        {errorMessage && (
+                            <div className="text-red-500 text-sm">
+                                {errorMessage}
+                            </div>
+                        )}
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-secondary">
-                                Waktu Pemakaian
+                                Gedung yang Dipesan
                             </label>
                             <select
-                                name="waktuPemakaian"
-                                value={formData.waktuPemakaian}
+                                name="gedung"
+                                value={formData.gedung}
                                 onChange={handleChange}
                                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-accent focus:border-accent"
                                 required
                             >
-                                <option value="">Pilih Waktu Pemakaian</option>
-                                <option value="Pagi">Pagi</option>
-                                <option value="Siang">Siang</option>
-                                <option value="Full 1 Hari">Full 1 Hari</option>
+                                <option value="">Pilih Gedung</option>
+                                <option value="Gedung A">Gedung A</option>
+                                <option value="Gedung B">Gedung B</option>
+                                <option value="Gedung C">Gedung C</option>
+                                <option value="Gedung D">Gedung D</option>
                             </select>
                         </div>
+                    </div>
 
+                    <div className="lg:w-1/2 space-y-4">
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-secondary">
                                 Keperluan
@@ -113,8 +97,8 @@ const FormOrder = () => {
                                 name="keperluan"
                                 value={formData.keperluan}
                                 onChange={handleChange}
-                                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-accent focus:border-accent"
-                                rows="3"
+                                className="mt-1 block w-full p-2 border resize-none border-gray-300 rounded-md shadow-sm focus:ring-accent focus:border-accent"
+                                rows="8"
                                 required
                             />
                         </div>
@@ -125,6 +109,7 @@ const FormOrder = () => {
                     <button
                         type="submit"
                         className="py-2 px-10 bg-accent text-white rounded-md flex gap-2 font-bold items-center hover:scale-105"
+                        disabled={!!errorMessage} 
                     >
                         Submit
                     </button>
