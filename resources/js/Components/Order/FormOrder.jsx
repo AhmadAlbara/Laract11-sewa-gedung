@@ -1,7 +1,12 @@
+// /resources/js/Components/Order/FormOrder.jsx
+
 import React, { useState } from "react";
 import InputField from "../InputField";
 
-const FormOrder = () => {
+const FormOrder = ({ gedungs }) => {
+    // Terima gedungs sebagai prop
+ // Pastikan gedungs diterima dengan benar
+
     const [formData, setFormData] = useState({
         namaPemesan: "",
         noTelpPemesan: "",
@@ -11,6 +16,7 @@ const FormOrder = () => {
         keperluan: "",
     });
     const [errorMessage, setErrorMessage] = useState("");
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -21,7 +27,7 @@ const FormOrder = () => {
             if (selectedDate < today) {
                 setErrorMessage("Tanggal Pemakaian Tidak Valid");
             } else {
-                setErrorMessage(""); 
+                setErrorMessage("");
             }
         }
     };
@@ -29,6 +35,7 @@ const FormOrder = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(formData);
+        // Tambahkan logika untuk mengirim data ke backend
     };
 
     return (
@@ -80,10 +87,11 @@ const FormOrder = () => {
                                 required
                             >
                                 <option value="">Pilih Gedung</option>
-                                <option value="Gedung A">Gedung A</option>
-                                <option value="Gedung B">Gedung B</option>
-                                <option value="Gedung C">Gedung C</option>
-                                <option value="Gedung D">Gedung D</option>
+                                {gedungs.map((gedung) => (
+                                    <option key={gedung.id} value={gedung.id}>
+                                        {gedung.name}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                     </div>
@@ -98,7 +106,7 @@ const FormOrder = () => {
                                 value={formData.keperluan}
                                 onChange={handleChange}
                                 className="mt-1 block w-full p-2 border resize-none border-gray-300 rounded-md shadow-sm focus:ring-accent focus:border-accent"
-                                rows="8"
+                                rows="14"
                                 required
                             />
                         </div>
@@ -109,7 +117,7 @@ const FormOrder = () => {
                     <button
                         type="submit"
                         className="py-2 px-10 bg-accent text-white rounded-md flex gap-2 font-bold items-center hover:scale-105"
-                        disabled={!!errorMessage} 
+                        disabled={!!errorMessage}
                     >
                         Submit
                     </button>

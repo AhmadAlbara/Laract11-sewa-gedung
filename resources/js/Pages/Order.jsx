@@ -3,8 +3,9 @@ import OrderInstructions from "@/Components/Order/OrderInstructions";
 import LandingLayout from "@/Layouts/LandingLayout";
 import { Head } from "@inertiajs/react";
 
+const Order = ({ gedungs }) => {
+ 
 
-const Order = () => {
     return (
         <LandingLayout>
             <Head title="Pemesanan Gedung" />
@@ -14,7 +15,7 @@ const Order = () => {
                 </h1>
                 <div className="flex">
                     <OrderInstructions />
-                    <FormOrder />
+                    <FormOrder gedungs={gedungs} />
                 </div>
             </section>
         </LandingLayout>

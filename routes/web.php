@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\GedungsController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Gedungs;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -12,12 +15,15 @@ Route::get('/', function () {
 Route::get('/about', function () {
     return Inertia::render('About');
 });
-Route::get('/order', function () {
-    return Inertia::render('Order');
-});
+
 Route::get('/schedule', function () {
     return Inertia::render('Schedule');
 });
+
+Route::resource('order', OrdersController::class);
+Route::resource('gedungs', GedungsController::class);
+
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
