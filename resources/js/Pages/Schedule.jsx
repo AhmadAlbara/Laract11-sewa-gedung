@@ -6,11 +6,20 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
+const Schedule = ({ orders }) => {
+    console.log(orders);
 
-const Schedule = () => {
     const handleDateClick = (arg) => {
         alert(`You clicked on: ${arg.dateStr}`);
     };
+      const getRandomColor = () => {
+          const letters = "0123456789ABCDEF";
+          let color = "#";
+          for (let i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+          }
+          return color;
+      };
 
     return (
         <LandingLayout>
@@ -22,21 +31,11 @@ const Schedule = () => {
                         initialView="dayGridMonth"
                         dateClick={handleDateClick}
                         events={[
-                            {
-                                title: "Event 1",
-                                date: "2024-10-10",
-                                color: "#4CAF50",
-                            },
-                            {
-                                title: "Event 2",
-                                date: "2024-10-10",
-                                color: "#FF5722",
-                            },
-                            {
-                                title: "Event 3",
-                                date: "2024-10-20",
-                                color: "#03A9F4",
-                            },
+                            ...orders.map((order) => ({
+                                title: order.keperluan,
+                                date: order.tanggal_pemakaian,
+                                color: getRandomColor(),
+                            })),
                         ]}
                         headerToolbar={{
                             left: "prev,next today",

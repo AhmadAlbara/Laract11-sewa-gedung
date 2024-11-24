@@ -6,36 +6,41 @@ use App\Models\Orders;
 use App\Http\Requests\StoreOrdersRequest;
 use App\Http\Requests\UpdateOrdersRequest;
 use App\Models\Gedungs;
+use Barryvdh\DomPDF\PDF;
 use Inertia\Inertia;
+
 
 class OrdersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function generatePdf(Orders $order, PDF $pdf)
+    {
+        $gedung = $order->gedung; 
+        $pdf = $pdf->loadView('pdf.order', compact('order', 'gedung'));
+        return $pdf->stream();
+    }
     public function index()
     {
         $gedungs = Gedungs::all();
+        $orderId = session('orderId');
 
         return Inertia::render("Order", [
-            'gedungs' => $gedungs
+            'gedungs' => $gedungs,
+            'orderId' => $orderId, 
         ]);
+      
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreOrdersRequest $request)
     {
-        //
+        $order = Orders::create($request->all());
+        $orderId = $order->id;
+
+      
+         return redirect()->route('order.index')->with([
+        'success' => 'Product created successfully.',
+        'orderId' => $orderId,
+    ]);
     }
 
     /**

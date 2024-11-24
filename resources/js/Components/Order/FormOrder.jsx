@@ -1,29 +1,52 @@
-// /resources/js/Components/Order/FormOrder.jsx
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputField from "../InputField";
+import Swal from "sweetalert2";
+import { useForm } from "@inertiajs/react";
 
-const FormOrder = ({ gedungs }) => {
-    // Terima gedungs sebagai prop
- // Pastikan gedungs diterima dengan benar
-
-    const [formData, setFormData] = useState({
-        namaPemesan: "",
-        noTelpPemesan: "",
+const FormOrder = ({ gedungs, orderId }) => {
+    const { data, setData, post, processing, errors } = useForm({
+        nama_pemesan: "",
+        no_telp_pemesan: "",
         email: "",
-        tanggalPemakaian: "",
-        gedung: "",
+        tanggal_pemakaian: "",
+        gedung_id: "",
         keperluan: "",
     });
+    const handleConfirm = () => {
+        if (orderId) {
+            window.location.href = `/order/${orderId}/download-pdf`;
+        } else {
+            Swal.fire("Error", "Order ID tidak ditemukan", "error");
+        }
+    };
+
+    useEffect(() => {
+        if (orderId) {
+            Swal.fire({
+                title: "Success",
+                text: "Berhasil Menambahkan Order. Klik unduh untuk menyimpan PDF.",
+                icon: "success",
+                confirmButtonText: "Unduh PDF",
+                cancelButtonText: "Tutup",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    handleConfirm();
+                }
+            });
+        }
+    }, [orderId]);
+
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-        if (name === "tanggalPemakaian") {
+        setData(name, value);
+
+        if (name === "tanggal_pemakaian") {
             const today = new Date();
             const selectedDate = new Date(value);
-
+            today.setHours(0, 0, 0, 0);
+            selectedDate.setHours(0, 0, 0, 0);
             if (selectedDate < today) {
                 setErrorMessage("Tanggal Pemakaian Tidak Valid");
             } else {
@@ -34,8 +57,21 @@ const FormOrder = ({ gedungs }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
-        // Tambahkan logika untuk mengirim data ke backend
+        post("/order", {
+            onSuccess: () => {
+                setData({
+                    nama_pemesan: "",
+                    no_telp_pemesan: "",
+                    email: "",
+                    tanggal_pemakaian: "",
+                    gedungs_id: "",
+                    keperluan: "",
+                });
+            },
+            onError: () => {
+                Swal.fire("Error", "Gagal Menambahkan Order", "error");
+            },
+        });
     };
 
     return (
@@ -45,31 +81,51 @@ const FormOrder = ({ gedungs }) => {
                     <div className="lg:w-1/2 space-y-4">
                         <InputField
                             label="Nama Pemesan"
-                            name="namaPemesan"
-                            value={formData.namaPemesan}
+                            name="nama_pemesan"
+                            value={data.nama_pemesan}
                             onChange={handleChange}
                         />
+                        {errors.nama_pemesan && (
+                            <div className="text-red-500 text-sm">
+                                {errors.nama_pemesan}
+                            </div>
+                        )}
                         <InputField
                             label="No. Telepon Pemesan"
-                            name="noTelpPemesan"
+                            name="no_telp_pemesan"
                             type="tel"
-                            value={formData.noTelpPemesan}
+                            value={data.no_telp_pemesan}
                             onChange={handleChange}
                         />
+                        {errors.no_telp_pemesan && (
+                            <div className="text-red-500 text-sm">
+                                {errors.no_telp_pemesan}
+                            </div>
+                        )}
                         <InputField
                             label="Email"
                             name="email"
                             type="email"
-                            value={formData.email}
+                            value={data.email}
                             onChange={handleChange}
                         />
+                        {errors.email && (
+                            <div className="text-red-500 text-sm">
+                                {errors.email}
+                            </div>
+                        )}
                         <InputField
                             label="Tanggal Pemakaian"
-                            name="tanggalPemakaian"
+                            name="tanggal_pemakaian"
                             type="date"
-                            value={formData.tanggalPemakaian}
+                            value={data.tanggal_pemakaian}
                             onChange={handleChange}
                         />
+                        {errors.tanggal_pemakaian && (
+                            <div className="text-red-500 text-sm">
+                                {errors.tanggal_pemakaian}
+                            </div>
+                        )}
                         {errorMessage && (
                             <div className="text-red-500 text-sm">
                                 {errorMessage}
@@ -80,8 +136,8 @@ const FormOrder = ({ gedungs }) => {
                                 Gedung yang Dipesan
                             </label>
                             <select
-                                name="gedung"
-                                value={formData.gedung}
+                                name="gedungs_id"
+                                value={data.gedungs_id}
                                 onChange={handleChange}
                                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-accent focus:border-accent"
                                 required
@@ -93,6 +149,11 @@ const FormOrder = ({ gedungs }) => {
                                     </option>
                                 ))}
                             </select>
+                            {errors.gedungs_id && (
+                                <div className="text-red-500 text-sm">
+                                    {errors.gedungs_id}
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -103,12 +164,17 @@ const FormOrder = ({ gedungs }) => {
                             </label>
                             <textarea
                                 name="keperluan"
-                                value={formData.keperluan}
+                                value={data.keperluan}
                                 onChange={handleChange}
                                 className="mt-1 block w-full p-2 border resize-none border-gray-300 rounded-md shadow-sm focus:ring-accent focus:border-accent"
                                 rows="14"
                                 required
                             />
+                            {errors.keperluan && (
+                                <div className="text-red-500 text-sm">
+                                    {errors.keperluan}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -117,9 +183,9 @@ const FormOrder = ({ gedungs }) => {
                     <button
                         type="submit"
                         className="py-2 px-10 bg-accent text-white rounded-md flex gap-2 font-bold items-center hover:scale-105"
-                        disabled={!!errorMessage}
+                        disabled={processing || !!errorMessage}
                     >
-                        Submit
+                        {processing ? "Processing..." : "Submit"}
                     </button>
                 </div>
             </form>

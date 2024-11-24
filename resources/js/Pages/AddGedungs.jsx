@@ -12,7 +12,6 @@ const AddGedungs = () => {
     });
 
     const handleSubmit = (e) => {
-        e.preventDefault();
        e.preventDefault();
        post("/gedungs", {
            onSuccess: () => {

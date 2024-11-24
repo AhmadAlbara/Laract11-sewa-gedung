@@ -3,6 +3,7 @@
 use App\Http\Controllers\GedungsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ScheduleController;
 use App\Models\Gedungs;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -19,9 +20,12 @@ Route::get('/about', function () {
 Route::get('/schedule', function () {
     return Inertia::render('Schedule');
 });
+Route::get('/order/{order}/download-pdf', [OrdersController::class, 'generatePdf']);
+
 
 Route::resource('order', OrdersController::class);
 Route::resource('gedungs', GedungsController::class);
+Route::resource('schedule', ScheduleController::class);
 
 
 
