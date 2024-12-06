@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('tanggal_pemakaian');
             $table->foreignUuid('gedungs_id')->constrained()->onDelete('cascade'); 
             $table->text('keperluan');
+            $table->boolean("is_active")->default(false);
             $table->timestamps();
         });
     }

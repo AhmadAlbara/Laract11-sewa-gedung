@@ -1,8 +1,9 @@
 import LandingLayout from "@/Layouts/LandingLayout";
 import { Head } from "@inertiajs/react";
-const About = () => {
+const About = ({auth}) => {
+    const user = auth.user;
     return (
-        <LandingLayout>
+        <LandingLayout user={user}>
             <Head title="Tentang Kami" />
             <section className="max-w-7xl mx-auto gap-10 flex flex-col lg:flex-row justify-between text-secondary mt-20 ">
                 <div className="w-1/2 space-y-6">

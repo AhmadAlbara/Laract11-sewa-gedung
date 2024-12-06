@@ -1,11 +1,13 @@
 import React from "react";
-import NavigationBar from "@/Components/NavigationBar";
-import Footer from "@/Components/Footer";
-import ScrollToTop from "@/Components/ScrollToTop";
-const LandingLayout = ({ children }) => {
+import NavigationBar from "@/Components/ui/landingpage/NavigationBar";
+import Footer from "@/Components/ui/landingpage/Footer";
+import ScrollToTop from "@/Components/elements/ScrollToTop";
+const LandingLayout = ({ children,user}) => {
+    console.log(user);
+    
     return (
         <div>
-            <NavigationBar />
+            <NavigationBar user={user}/>
             <main className="w-full">{children}</main>
             <Footer />
             <ScrollToTop/>

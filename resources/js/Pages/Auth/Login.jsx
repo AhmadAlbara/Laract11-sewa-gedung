@@ -1,5 +1,5 @@
-import InputError from "@/Components/InputError";
-import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/elements/InputError";
+import TextInput from "@/Components/elements/TextInput";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
@@ -28,7 +28,10 @@ export default function Login({ status, canResetPassword }) {
                 </div>
             )}
 
-            <form onSubmit={submit} className="px-8 py-10 w-1/2 text-center flex flex-col  justify-center">
+            <form
+                onSubmit={submit}
+                className="px-8 py-10 w-1/2 text-center flex flex-col  justify-center"
+            >
                 <h1 className="text-2xl font-bold text-secondary mb-2">
                     Sign In
                 </h1>

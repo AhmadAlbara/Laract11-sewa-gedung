@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import InputField from "../InputField";
+
 import Swal from "sweetalert2";
 import { useForm } from "@inertiajs/react";
+import InputField from "@/Components/elements/InputField";
 
 const FormOrder = ({ gedungs, orderId }) => {
     const { data, setData, post, processing, errors } = useForm({

@@ -57,6 +57,7 @@
         <p>No. Telepon : <span class="highlight">{{ $order->no_telp_pemesan }}</span></p>
         <p>Email : <span class="highlight">{{ $order->email }}</span></p>
         <p>Keperluan : <span class="highlight">{{ $order->keperluan }}</span></p>
+        <p>Harga : <span class="highlight">{{ $order->gedung->price }}</span></p>
     </div>
 
     <p>Lakukan konfirmasi pemesanan aula secara offline ke BPSDM Provinsi Kalimantan Barat pada saat jam operasional di hari SENIN - JUMAT pukul 07:15 WIB s/d pukul 11:00 WIB dan pukul 13:00 WIB s/d pukul 15:00 WIB.</p>

@@ -1,13 +1,14 @@
-import AboutBuilding from "@/Components/Home/AboutBuilding";
-import Banner from "@/Components/Home/Banner";
-import Price from "@/Components/Home/Price";
+import AboutBuilding from "@/Components/ui/landingpage/Home/AboutBuilding";
+import Banner from "@/Components/ui/landingpage/Home/Banner";
+import Price from "@/Components/ui/landingpage/Home/Price";
 import LandingLayout from "@/Layouts/LandingLayout";
 import { Head } from "@inertiajs/react";
 import React from "react";
 
-const Home = () => {
+const Home = ({auth}) => {
+    const user = auth.user;
     return (
-        <LandingLayout>
+        <LandingLayout user={user}>
             <Head title="Beranda" />
             <Banner />
             <AboutBuilding />

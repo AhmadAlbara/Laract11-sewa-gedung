@@ -14,15 +14,16 @@ class GedungsController extends Controller
      */
     public function index()
     {
-       
+        $gedungs = Gedungs::all();
+        return Inertia::render('Dashboard/Gedung/index',[
+            'gedungs' => $gedungs,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        return Inertia::render('AddGedungs');
+        return Inertia::render('Dashboard/Gedung/AddGedungs');
     }
 
     /**
@@ -31,7 +32,7 @@ class GedungsController extends Controller
     public function store(StoreGedungsRequest $request)
     {
         Gedungs::create($request->all());
-        return redirect()->route('order.index')->with('success', 'Product created successfully.');
+        return redirect()->route('gedung.index')->with('success', 'Product created successfully.');
     }
 
     /**
@@ -45,24 +46,32 @@ class GedungsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Gedungs $gedungs)
+    public function edit($id)
     {
-        //
+        $gedung = Gedungs::findOrFail($id);
+        return Inertia::render('Dashboard/Gedung/EditGedungs', [
+            'gedung' => $gedung,
+        ]);
+    
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGedungsRequest $request, Gedungs $gedungs)
+    public function update(UpdateGedungsRequest $request, $id)
     {
-        //
+        $gedung = Gedungs::findOrFail($id);
+        $gedung->update($request->all());
+        return redirect()->route('gedung.index')->with('success', 'Gedung updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Gedungs $gedungs)
+    public function destroy($id)
     {
-        //
+        $gedung = Gedungs::findOrFail($id);
+        $gedung->delete();
+        return redirect()->route('gedung.index')->with('success', 'Gedung deleted successfully.');
     }
 }

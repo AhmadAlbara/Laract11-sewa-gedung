@@ -15,7 +15,7 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $orders = Orders::all();
+        $orders = Orders::with("gedung")->where('is_active', true)->get();;
         return Inertia::render("Schedule", [
             'orders' => $orders,
          
