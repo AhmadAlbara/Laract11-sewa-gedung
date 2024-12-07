@@ -1,14 +1,21 @@
 import React from "react";
-import { usePage } from "@inertiajs/react";
+
 import LinkItem from "./LinkItem";
 import { FaChartBar } from "react-icons/fa";
 
-import { FaPeopleGroup, FaBuilding } from "react-icons/fa6";
-import { FaPeopleCarryBox } from "react-icons/fa6";
+import {  FaBuilding } from "react-icons/fa6";
+
 import { BsBox } from "react-icons/bs";
 const Sidebar = ({ isSidebarOpen }) => {
-    const { auth } = usePage().props;
 
+
+       const quotes = [
+           "The best way to get started is to quit talking and begin doing. - Walt Disney",
+           "The pessimist sees difficulty in every opportunity. The optimist sees opportunity in every difficulty. - Winston Churchill",
+           "Don’t let yesterday take up too much of today. - Will Rogers",
+           "You learn more from failure than from success. Don’t let it stop you. Failure builds character. - Unknown",
+           "It’s not whether you get knocked down, it’s whether you get up. - Vince Lombardi",
+       ];
  
     const linkData = [
         {
@@ -26,11 +33,6 @@ const Sidebar = ({ isSidebarOpen }) => {
             icon: FaBuilding,
             text: "Semua Gedung",
         },
-        {
-            href: "/pelanggan",
-            icon: FaPeopleGroup,
-            text: "Pelanggan",
-        },
     ];
     return (
         <aside
@@ -38,12 +40,16 @@ const Sidebar = ({ isSidebarOpen }) => {
                 isSidebarOpen ? "translate-x-0" : "-translate-x-full"
             }`}
         >
-            <div className="h-full px-3 pb-4 overflow-y-auto">
+            <div className="h-full px-3 pb-4 overflow-y-auto flex flex-col justify-between">
                 <ul className="space-y-2 font-medium">
                     {linkData.map((link, index) => (
                         <LinkItem key={index} {...link} />
                     ))}
                 </ul>
+                <div className="w-full h-[200px] bg-accent rounded-lg  text-center text-white flex flex-col items-center  justify-center">
+                    <h1 className="mb-2 text-2xl font-bold">Quotes</h1>
+                    <p className="px-4 text-sm font-bold">{quotes[Math.floor(Math.random() * quotes.length)]}</p>
+                </div>
             </div>
         </aside>
     );

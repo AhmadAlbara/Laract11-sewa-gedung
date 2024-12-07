@@ -58,6 +58,13 @@ const Navbar = ({ user, toggleSidebar }) => {
                                     >
                                         Log Out
                                     </Dropdown.Link>
+                                    <Dropdown.Link
+                                        href={"/"}
+                                  
+                                        
+                                    >
+                                        Beranda
+                                    </Dropdown.Link>
                                 </Dropdown.Content>
                             </Dropdown>
                         </div>

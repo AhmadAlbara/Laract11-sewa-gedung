@@ -6,7 +6,7 @@ import { useState } from "react";
 
 
 export default function AuthenticatedLayout({ user, children }) {
-    console.log(user);
+  
     
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 

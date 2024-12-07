@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GedungsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProfileController;
@@ -31,9 +32,7 @@ Route::post('/pesanan/confirm/{id}', [OrdersController::class, 'confirm'])->name
 Route::delete('/pesanan/delete/{id}', [OrdersController::class, 'destroy'])->name('pesanan.delete');
 
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard/index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class,"index"])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/pesanan', [OrdersController::class, 'adminDashboard'])->name('admin.dashboard');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
