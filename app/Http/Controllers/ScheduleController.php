@@ -6,6 +6,7 @@ use App\Models\Schedule;
 use App\Http\Requests\StoreScheduleRequest;
 use App\Http\Requests\UpdateScheduleRequest;
 use App\Models\Orders;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Inertia\Inertia;
 
 class ScheduleController extends Controller
@@ -20,6 +21,13 @@ class ScheduleController extends Controller
             'orders' => $orders,
          
         ]);
+    }
+    public function downloadPdf($id)
+    {
+        $order = Orders::findOrFail($id);
+
+        $pdf = Pdf::loadView('pdf.schedule', ['order' => $order]);
+        return $pdf->download("schedule-{$order->id}.pdf");
     }
 
     /**

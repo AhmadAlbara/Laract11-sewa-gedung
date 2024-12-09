@@ -7,26 +7,31 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
 const Schedule = ({ orders, auth }) => {
+
+    const handleDownloadPdf = (eventId) => {
+          window.location.href = `/order/${eventId}/download-pdf`;
+    };
     const user = auth.user;
 
     const [selectedEvent, setSelectedEvent] = React.useState(null);
     const [showModal, setShowModal] = React.useState(false);
 
-    // Handle when an event is clicked
+
     const handleEventClick = (info) => {
         const event = info.event;
         setSelectedEvent({
+            id: info.event.id,
             title: event.title,
             date: event.startStr,
             color: event.backgroundColor,
-            nama_pemesan: event.extendedProps.nama_pemesan, 
-            keperluan: event.extendedProps.keperluan, 
-            other_info: event.extendedProps.other_info, 
+            nama_pemesan: event.extendedProps.nama_pemesan,
+            keperluan: event.extendedProps.keperluan,
+            other_info: event.extendedProps.other_info,
         });
         setShowModal(true);
     };
 
-    // Generate random color for events
+
     const getRandomColor = () => {
         const letters = "0123456789";
         let color = "#0053";
@@ -47,6 +52,7 @@ const Schedule = ({ orders, auth }) => {
                         eventClick={handleEventClick} // Event click handler
                         events={[
                             ...orders.map((order) => ({
+                                id: order.id, 
                                 title: order.gedung.name,
                                 date: order.tanggal_pemakaian,
                                 color: getRandomColor(),
@@ -75,15 +81,24 @@ const Schedule = ({ orders, auth }) => {
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[100]">
                         <div className="bg-white rounded-lg p-6 shadow-lg max-w-sm">
                             <h2 className="text-xl font-bold mb-4">
-                              Gedung :  {selectedEvent.title}
+                                Gedung: {selectedEvent.title}
                             </h2>
                             <p>Tanggal: {selectedEvent.date}</p>
-                            <p>Nama Pemesan: {selectedEvent.nama_pemesan}</p>{" "}
-                            {/* Nama Pemesan */}
-                            <p>Keperluan: {selectedEvent.keperluan}</p>{" "}
-                            {/* Keperluan */}
+                            <p>Nama Pemesan: {selectedEvent.nama_pemesan}</p>
+                            <p>Keperluan: {selectedEvent.keperluan}</p>
+
+                            {/* Tombol Download PDF */}
                             <button
-                                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+                                onClick={() =>
+                                    handleDownloadPdf(selectedEvent.id)
+                                } 
+                                className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                            >
+                                Download PDF
+                            </button>
+
+                            <button
+                                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 ml-4"
                                 onClick={() => setShowModal(false)}
                             >
                                 Tutup

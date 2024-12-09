@@ -25,7 +25,7 @@ export default function Dashboard({
                         <div>
                             <h2 className="text-lg font-bold">{totalGedung}</h2>
                             <p className="text-sm text-gray-600">
-                 b               Total Gedung
+                              Total Gedung
                             </p>
                         </div>
                     </div>

@@ -43,4 +43,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/orders/delete-pending', [OrdersController::class, 'deletePendingOrders'])
     ->name('orders.deletePending')
     ->middleware('auth');
+Route::get('/schedule/{id}/download-pdf', [ScheduleController::class, 'downloadPdf']);
+
 require __DIR__ . '/auth.php';
